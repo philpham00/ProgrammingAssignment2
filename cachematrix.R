@@ -16,7 +16,7 @@ makeCacheMatrix <- function(x = matrix()) {
     m <<- NULL
   }
   get <- function() x
-  setinverse <- function(inverse) m <<- solve
+  setinverse <- function(solve) m <<- solve
   getinverse <- function() m
   list(set = set, get = get,
        setinverse = setinverse,
@@ -37,7 +37,17 @@ cacheSolve <- function(x, ...) {
     return(m)
   }
   data <- x$get()
-  m <- inverse(data, ...)
+  m <- solve(data, ...)
   x$setinverse(m)
   m
 }
+
+
+## samples
+A <- matrix(1:4,2,2)
+m1<-makeCacheMatrix(A)
+cacheSolve(m1)
+
+mat<-matrix(c(1,4,9,0,-3,2,2,7,8),3,3)
+m1<-makeCacheMatrix(mat)
+cacheSolve(m1)
